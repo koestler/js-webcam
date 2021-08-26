@@ -1,9 +1,15 @@
 import { h } from 'preact';
-import style from './style.css';
 
 const Image = ({viewName, cameraName}) => {
 	return (
-		<img class={style.image} src={`/api/v0/images/${viewName}/${cameraName}.jpg`} alt={name} />
+		<article class="message is-dark">
+			<div className="message-header">
+	<p>{cameraName}</p>
+			</div>
+			<div className="message-body">
+			<img src={`/api/v0/images/${viewName}/${cameraName}.jpg`} alt={name}/>
+			</div>
+		</article>
 	);
 }
 

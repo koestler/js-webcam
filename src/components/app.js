@@ -6,6 +6,7 @@ import { CubeGrid } from 'styled-loaders'
 
 import {useState, useEffect} from "preact/hooks";
 import View from "./view";
+import Footer from "./footer";
 
 const App = () => {
 	const [config, setConfig] = useState(null)
@@ -28,6 +29,7 @@ const App = () => {
 				{ config.views.map(view => <View key={view.name} path={`/${view.name}`} {...view} />)}
 				<DefaultRoute default views={config.views} />
 			</Router>
+			<Footer/>
 		</div>
 	)
 }
