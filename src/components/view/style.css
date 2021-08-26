@@ -1,5 +1,11 @@
-.profile {
-	padding: 56px 20px;
-	min-height: 100%;
+ul.images {
+	list-style-type: none;
+}
+
+ul.images li {
+	border: 2px solid grey;
+}
+
+ul.images img {
 	width: 100%;
 }
