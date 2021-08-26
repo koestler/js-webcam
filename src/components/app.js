@@ -29,7 +29,7 @@ const App = () => {
 				{ config.views.map(view => <View key={view.name} path={`/${view.name}`} {...view} />)}
 				<DefaultRoute default views={config.views} />
 			</Router>
-			<Footer/>
+			<Footer />
 		</div>
 	)
 }
