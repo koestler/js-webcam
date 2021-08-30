@@ -1,7 +1,7 @@
 import React from 'react'
 
 import Image from '../image'
-import { Block, Section } from 'react-bulma-components'
+import { Section } from 'react-bulma-components'
 
 const View = ({ title, name, cameras }) => {
   return (

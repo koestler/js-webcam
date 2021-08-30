@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom'
-import { Button, Container } from 'react-bulma-components'
+import { Button } from 'react-bulma-components'
 import Header from './components/header'
 import View from './components/view'
 import Footer from './components/footer'
