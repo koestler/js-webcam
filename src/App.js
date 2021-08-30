@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom'
 import { Button, Container, Heading, Notification, Section } from 'react-bulma-components'
+import { Helmet } from 'react-helmet'
 import Header from './components/header'
 import View from './components/view'
 import Footer from './components/footer'
 import Login from './components/login'
-import { Helmet } from 'react-helmet'
 
 const App = () => {
   const [config, setConfig] = useState(null)
@@ -16,21 +16,28 @@ const App = () => {
   }, [])
 
   if (config === null) {
-    return (
-      <Container>
-        <Button size='large' loading />
-      </Container>
-    )
+    return <Loading />
   }
+  return <ConfiguredApp {...config} />
+}
 
+const Loading = () => {
+  return (
+    <Container>
+      <Button size='large' loading />
+    </Container>
+  )
+}
+
+const ConfiguredApp = ({ projectTitle, views }) => {
   return (
     <BrowserRouter>
       <Helmet>
-        <title>{config.projectTitle}</title>
+        <title>{projectTitle}</title>
       </Helmet>
-      <Header title={config.projectTitle} views={config.views} />
+      <Header title={projectTitle} views={views} />
       <Switch>
-        {config.views.map(view =>
+        {views.map(view =>
           <Route key={view.name} path={`/${view.name}`}>
             <View {...view} />
           </Route>
@@ -38,7 +45,7 @@ const App = () => {
         <Route path='/login'>
           <Login />
         </Route>
-        <DefaultRoute default views={config.views} />
+        <DefaultRoute default views={views} />
       </Switch>
       <Footer />
     </BrowserRouter>
