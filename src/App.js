@@ -5,6 +5,7 @@ import Header from './components/header'
 import View from './components/view'
 import Footer from './components/footer'
 import Login from './components/login'
+import { Helmet } from 'react-helmet'
 
 const App = () => {
   const [config, setConfig] = useState(null)
@@ -18,13 +19,16 @@ const App = () => {
   if (config === null) {
     return (
       <Container>
-        <Button color='warning' size='large' loading />
+        <Button size='large' loading />
       </Container>
     )
   }
 
   return (
     <BrowserRouter>
+      <Helmet>
+        <title>{config.projectTitle}</title>
+      </Helmet>
       <Header title={config.projectTitle} views={config.views} />
       <Switch>
         {config.views.map(view =>
