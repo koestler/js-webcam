@@ -2,29 +2,39 @@ import React, { useState } from 'react'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlay, faStop, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
-import { Button } from 'react-bulma-components'
+import { Button, Image, Message } from 'react-bulma-components'
 
-const Image = ({ viewName, cameraName }) => {
+const ImageComponent = ({ viewName, cameraName }) => {
   const [play, setPlay] = useState(false)
   const [hide, setHide] = useState(false)
 
+  let playButton = null
+  let body = null
+  if (!hide) {
+    playButton = (
+      <Button onClick={() => setPlay(!play)}>
+        <FontAwesomeIcon icon={play ? faStop : faPlay} />
+      </Button>
+    )
+    body = (
+      <Message.Body>
+        <Image src={`/api/v0/images/${viewName}/${cameraName}.jpg`} />
+      </Message.Body>
+    )
+  }
+
   return (
-    <article className='message is-dark'>
-      <div className='message-header'>
+    <Message color='dark'>
+      <Message.Header>
         <p>{cameraName}</p>
-        {hide ? null : <Button onClick={() => setPlay(!play)}>
-          <FontAwesomeIcon icon={play ? faStop : faPlay} />
-        </Button>}
+        {hide || playButton}
         <Button onClick={() => setHide(!hide)}>
           <FontAwesomeIcon icon={hide ? faEyeSlash : faEye} />
         </Button>
-      </div>
-      {hide ? null
-        : <div className='message-body'>
-          <img src={`/api/v0/images/${viewName}/${cameraName}.jpg`} alt={cameraName} />
-        </div>}
-    </article>
+      </Message.Header>
+      {hide || body}
+    </Message>
   )
 }
 
-export default Image
+export default ImageComponent
