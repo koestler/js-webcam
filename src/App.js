@@ -12,7 +12,6 @@ const App = () => {
   useEffect(() => {
     window.fetch('/api/v0/config')
       .then(res => res.json())
-      .then(x => new Promise(resolve => setTimeout(() => resolve(x), 500)))
       .then(data => setConfig(data))
   }, [])
 
