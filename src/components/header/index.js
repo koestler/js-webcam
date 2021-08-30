@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
-import './style.css'
 import {Button, Navbar} from "react-bulma-components";
+import {Link} from "react-router-dom";
 
 const Header = (props) => {
 	const [burgerActive, setBurgerActive] = useState(false)
@@ -21,7 +21,7 @@ const Header = (props) => {
 		  )}
       </Navbar.Container>
       <Navbar.Container align="end">
-        <Navbar.Item><Button>Log In</Button></Navbar.Item>
+        <Navbar.Item renderAs={Link} href="/login"><Button>Log in</Button></Navbar.Item>
       </Navbar.Container>
     </Navbar.Menu>
   </Navbar>
