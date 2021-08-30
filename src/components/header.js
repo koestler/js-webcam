@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { Button, Heading, Navbar } from 'react-bulma-components'
-import { Link } from 'react-router-dom'
+import { Button, Navbar } from 'react-bulma-components'
+import { Link, NavLink } from 'react-router-dom'
 
 const Header = (props) => {
   const [burgerActive, setBurgerActive] = useState(false)
@@ -9,14 +9,14 @@ const Header = (props) => {
     <Navbar color='primary' active={burgerActive}>
       <Navbar.Brand>
         <Navbar.Item renderAs='a' href='/'>
-          <Heading>{props.title}</Heading>
+          <p>{props.title}</p>
         </Navbar.Item>
         <Navbar.Burger onClick={() => setBurgerActive(!burgerActive)} />
       </Navbar.Brand>
       <Navbar.Menu>
         <Navbar.Container>
           {props.views.map(view =>
-            <Navbar.Item key={view.name} to={`/${view.name}`} renderAs={Link}>
+            <Navbar.Item key={view.name} to={`/${view.name}`} activeClassName='is-active' renderAs={NavLink}>
               {view.title}
             </Navbar.Item>
           )}
