@@ -1,11 +1,11 @@
 import React from 'react'
-import { Footer, Container, Content } from 'react-bulma-components'
+import { Footer as BulmaFooter, Container, Content } from 'react-bulma-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGithub } from '@fortawesome/free-brands-svg-icons'
 
-const FooterComponent = () => {
+const Footer = () => {
   return (
-    <Footer>
+    <BulmaFooter>
       <Container>
         <Content style={{ textAlign: 'center' }}>
           <p>
@@ -14,8 +14,8 @@ const FooterComponent = () => {
           </p>
         </Content>
       </Container>
-    </Footer>
+    </BulmaFooter>
   )
 }
 
-export default FooterComponent
+export default Footer

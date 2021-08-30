@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlay, faStop, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 import { Button, Image, Message } from 'react-bulma-components'
 
-const ImageComponent = ({ viewName, cameraName }) => {
+const Camera = ({ viewName, cameraName }) => {
   const [play, setPlay] = useState(false)
   const [hide, setHide] = useState(false)
 
@@ -37,4 +37,4 @@ const ImageComponent = ({ viewName, cameraName }) => {
   )
 }
 
-export default ImageComponent
+export default Camera

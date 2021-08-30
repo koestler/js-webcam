@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Image from './image'
+import Camera from './camera'
 import { Columns, Heading, Section } from 'react-bulma-components'
 
 const View = ({ title, name, cameras }) => {
@@ -10,7 +10,7 @@ const View = ({ title, name, cameras }) => {
       <Columns>
         {cameras.map(camera =>
           <Columns.Column key={camera}>
-            <Image viewName={name} cameraName={camera} />
+            <Camera viewName={name} cameraName={camera} />
           </Columns.Column>
         )}
       </Columns>
