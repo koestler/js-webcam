@@ -12,7 +12,7 @@ const Header = (props) => {
 				<div className="navbar-item">
 					<h1 className={style.title}>{props.title}</h1>
 				</div>
-				<a role="button" className={`navbar-burger ${  burgerActive ? 'is-active':''}`} aria-label="menu" aria-expanded="false"
+				<a role="button" className={`navbar-burger ${ burgerActive ? 'is-active':''}`} aria-label="menu" aria-expanded="false"
 				   data-target="main-menu">
 					<span aria-hidden="true" />
 					<span aria-hidden="true" />
@@ -23,7 +23,7 @@ const Header = (props) => {
 			<div id="main-menu" className={`navbar-menu ${  burgerActive ? 'is-active':''}`}>
 				<div className="navbar-start">
 					{ props.views.map(view =>
-						<Link class="navbar-item" key={view.name} activeClassName={style.active} href={`/${view.name}`}>{view.title}</Link>
+						<Link class="navbar-item" key={view.name} activeClassName="is-active" href={`/${view.name}`}>{view.title}</Link>
 					)}
 				</div>
 
