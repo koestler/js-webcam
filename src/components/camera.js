@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlay, faStop, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 import { Button, Image, Message } from 'react-bulma-components'
 
-const Camera = ({ viewName, cameraName }) => {
+const Camera = ({ viewName, cameraName, cameraTitle }) => {
   const [play, setPlay] = useState(false)
   const [hide, setHide] = useState(false)
 
@@ -26,7 +26,7 @@ const Camera = ({ viewName, cameraName }) => {
   return (
     <Message color='dark'>
       <Message.Header>
-        <p>{cameraName}</p>
+        <p>{cameraTitle}</p>
         {hide || playButton}
         <Button onClick={() => setHide(!hide)}>
           <FontAwesomeIcon icon={hide ? faEyeSlash : faEye} />

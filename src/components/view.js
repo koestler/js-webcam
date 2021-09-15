@@ -8,9 +8,9 @@ const View = ({ title, name, cameras }) => {
     <Section>
       <Heading>{title}</Heading>
       <Columns>
-        {cameras.map(camera =>
-          <Columns.Column key={camera}>
-            <Camera viewName={name} cameraName={camera} />
+        {cameras.map(camera=>
+          <Columns.Column key={camera.name}>
+            <Camera viewName={name} cameraName={camera.name} cameraTitle={camera.title} />
           </Columns.Column>
         )}
       </Columns>
