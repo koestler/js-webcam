@@ -1,39 +1,32 @@
-import React, { useState } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlay, faStop, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
-import { Button, Image, Message } from 'react-bulma-components'
+import { Image, Message } from 'react-bulma-components'
+import { AutoplayContext } from './autoplay'
+import HideableMessage from './hideableMessage'
 
 const Camera = ({ viewName, cameraName, cameraTitle }) => {
-  const [play, setPlay] = useState(false)
-  const [hide, setHide] = useState(false)
+  const autoplay = useContext(AutoplayContext)
+  const [imgSrc, setImgSrc] = useState(null)
 
-  let playButton = null
-  let body = null
-  if (!hide) {
-    playButton = (
-      <Button onClick={() => setPlay(!play)}>
-        <FontAwesomeIcon icon={play ? faStop : faPlay} />
-      </Button>
-    )
-    body = (
-      <Message.Body>
-        <Image src={`/api/v0/images/${viewName}/${cameraName}.jpg`} />
-      </Message.Body>
-    )
-  }
+  useEffect(() => {
+    const imgUrl = `/api/v0/images/${viewName}/${cameraName}.jpg`
+    window.fetch(imgUrl)
+      .then(response => response.blob())
+      .then(blob => new Promise(resolve => {
+        const reader = new window.FileReader()
+        reader.onload = function () { resolve(this.result) }
+        reader.readAsDataURL(blob)
+      }))
+      .then(setImgSrc)
+  }, [viewName, cameraName])
 
   return (
-    <Message color='dark'>
-      <Message.Header>
-        <p>{cameraTitle}</p>
-        {hide || playButton}
-        <Button onClick={() => setHide(!hide)}>
-          <FontAwesomeIcon icon={hide ? faEyeSlash : faEye} />
-        </Button>
-      </Message.Header>
-      {hide || body}
-    </Message>
+    <HideableMessage header={<p>{cameraTitle}</p>}>
+      <Message.Body>
+        {imgSrc && <Image src={imgSrc} />}
+        {autoplay.play && <p>refresh every {autoplay.refreshIntervalMs}</p>}
+      </Message.Body>
+    </HideableMessage>
   )
 }
 
