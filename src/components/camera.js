@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from 'react'
 import { Image, Message } from 'react-bulma-components'
 import { AutoplayContext } from './autoplay'
 import HideableMessage from './hideableMessage'
+import { useInView } from 'react-intersection-observer'
 
 const fetchImage = (imgUrl, setImgSrc, play, refreshIntervalMs, setTimer) => {
   const fetchStarted = Date.now()
@@ -24,34 +25,38 @@ const fetchImage = (imgUrl, setImgSrc, play, refreshIntervalMs, setTimer) => {
 }
 
 const Camera = ({ viewName, cameraName, cameraTitle }) => {
-  const {play, refreshIntervalMs} = useContext(AutoplayContext)
+  const { play, refreshIntervalMs } = useContext(AutoplayContext)
   const [initial, setInitial] = useState(true)
   const [imgSrc, setImgSrc] = useState(null)
   const [timer, setTimer] = useState(null)
+  const { ref, inView } = useInView()
+  const autoplay = play && inView
 
   useEffect(() => {
-    if (initial || (play && timer === null)) {
-      fetchImage( `/api/v0/images/${viewName}/${cameraName}.jpg`, setImgSrc, play, refreshIntervalMs, setTimer)
+    if (initial || (autoplay && timer === null)) {
+      fetchImage(`/api/v0/images/${viewName}/${cameraName}.jpg`, setImgSrc, autoplay, refreshIntervalMs, setTimer)
       setInitial(false)
     }
     return () => {
-      // cleanup on unmout
+      // cleanup on unmount
       clearTimeout(timer)
     }
-  }, [viewName, cameraName, initial, setInitial, setImgSrc, timer, setTimer, play, refreshIntervalMs])
+  }, [viewName, cameraName, initial, setInitial, setImgSrc, timer, setTimer, autoplay, refreshIntervalMs])
 
   useEffect(() => {
     // stop refresh timer
-    if (!play) {
+    if (!autoplay) {
       clearTimeout(timer)
       setTimer(null)
     }
-  }, [play, timer, setTimer])
+  }, [autoplay, timer, setTimer])
 
   return (
     <HideableMessage header={<p>{cameraTitle}</p>}>
       <Message.Body>
-        {imgSrc && <Image src={imgSrc} />}
+        <div ref={ref}>
+          {imgSrc && <Image src={imgSrc} />}
+        </div>
       </Message.Body>
     </HideableMessage>
   )
