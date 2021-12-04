@@ -1,11 +1,14 @@
 import React, { useState, useContext, createContext } from 'react'
 
-// todo: save / load authContex
-// const authStorage = window.sessionStorage
-// const storageKey = 'authenticatedUser'
-//       authStorage.setItem(storageKey, JSON.stringify(body))
-//   const loginResponse = JSON.parse(authStorage.getItem(storageKey))
+// store current token not only in react state but also in sessionStorage
+const authStorage = window.sessionStorage
+const storageKey = 'authenticatedUser'
+const storeLoginResponse = loginResponse => {
+  authStorage.setItem(storageKey, JSON.stringify(loginResponse))
+}
+const initialLoginResponse = JSON.parse(authStorage.getItem(storageKey))
 
+// setup react context API
 const authContext = createContext(null)
 
 export function AuthProvider ({ children }) {
@@ -16,7 +19,12 @@ export function AuthProvider ({ children }) {
 export const useAuth = () => useContext(authContext)
 
 function useProvideAuth () {
-  const [loginResponse, setLoginResponse] = useState(null)
+  const [loginResponse, setLoginResponseState] = useState(initialLoginResponse)
+
+  const setLoginResponse = loginResponse => {
+    setLoginResponseState(loginResponse)
+    storeLoginResponse(loginResponse)
+  }
 
   const login = async (user, password) => {
     try {
