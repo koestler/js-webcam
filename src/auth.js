@@ -1,34 +1,60 @@
-const authStorage = window.localStorage
-const storageKey = 'authenticatedUser'
+import React, { useState, useContext, createContext } from 'react'
 
-export const login = async (user, password) => {
-  try {
-    const response = await window.fetch('/api/v0/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ user, password })
-    })
+// todo: save / load authContex
+// const authStorage = window.sessionStorage
+// const storageKey = 'authenticatedUser'
+//       authStorage.setItem(storageKey, JSON.stringify(body))
+//   const loginResponse = JSON.parse(authStorage.getItem(storageKey))
 
-    const body = await response.json()
+const authContext = createContext(null)
 
-    if (response.ok) {
-      authStorage.setItem(storageKey, JSON.stringify(body))
-      return null
-    } else {
-      return 'login failed: ' + body.message
+export function AuthProvider ({ children }) {
+  const auth = useProvideAuth()
+  return <authContext.Provider value={auth}>{children}</authContext.Provider>
+}
+
+export const useAuth = () => useContext(authContext)
+
+function useProvideAuth () {
+  const [loginResponse, setLoginResponse] = useState(null)
+
+  const login = async (user, password) => {
+    try {
+      const response = await window.fetch('/api/v0/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ user, password })
+      })
+
+      const body = await response.json()
+
+      if (response.ok) {
+        setLoginResponse(body)
+        return null
+      } else {
+        return 'login failed: ' + body.message
+      }
+    } catch (err) {
+      return 'cannot login: ' + err
     }
-  } catch (err) {
-    return 'cannot login: ' + err
   }
-}
 
-export const logout = () => {
-  authStorage.removeItem(storageKey)
-}
+  const logout = () => setLoginResponse(null)
 
-export const getLoginResponse = () => {
-  const loginResponse = JSON.parse(authStorage.getItem(storageKey))
-  return loginResponse
+  const isLoggedIn = () => loginResponse !== null
+
+  const getUser = () => {
+    if (loginResponse === null) return null
+    return loginResponse.user
+  }
+
+  return {
+    loginResponse,
+    isLoggedIn,
+    getUser,
+    login,
+    logout
+  }
 }

@@ -1,17 +1,18 @@
 import React, { useState } from 'react'
 import { Button, Box, Form, Section, Heading, Notification } from 'react-bulma-components'
 import { useForm } from 'react-hook-form'
-import { login } from '../auth'
+import { useAuth } from '../auth'
 
 const Login = () => {
   const { register, handleSubmit, formState: { errors } } = useForm()
   const [success, setSuccess] = useState(false)
   const [error, setError] = useState(false)
+  const { login, isLoggedIn } = useAuth()
 
   const onSubmit = async data => {
     setSuccess(false)
     setError(false)
-    const error = await login(data.username, data.password)
+    const error = await login(data.user, data.password)
     if (error === null) {
       setSuccess(true)
     } else {
@@ -23,16 +24,16 @@ const Login = () => {
     <Section>
       <Heading>Log in</Heading>
       <Box style={{ maxWidth: 600, margin: 'auto' }}>
-        {success && <Notification color='success'>You have been logged in.</Notification>}
-        {error && <Notification color='danger'>{error}</Notification>}
+        {success && isLoggedIn() && <Notification color='success'>You have been logged in.</Notification>}
+        {error && !isLoggedIn() && <Notification color='danger'>{error}</Notification>}
 
         <form onSubmit={handleSubmit(onSubmit)}>
           <Form.Field>
-            <Form.Label>Username</Form.Label>
+            <Form.Label>User</Form.Label>
             <input
               type='text'
-              className={'input is-primary' + (errors.username ? ' is-danger' : '')}
-              {...register('username', { required: true, minLength: 2 })}
+              className={'input is-primary' + (errors.user ? ' is-danger' : '')}
+              {...register('user', { required: true, minLength: 2 })}
             />
           </Form.Field>
           <Form.Field>
