@@ -54,13 +54,16 @@ function useProvideAuth () {
   const isLoggedIn = () => loginResponse !== null
 
   const getUser = () => {
-    if (loginResponse === null) return null
-    return loginResponse.user
+    return loginResponse?.user
   }
 
   const getToken = () => {
-    if (loginResponse === null) return null
-    return loginResponse.token
+    return loginResponse?.token
+  }
+
+  const isViewAllowed = view => {
+    const allowedViews = loginResponse?.allowedViews || []
+    return view.isPublic || allowedViews.includes(view.name)
   }
 
   return {
@@ -68,6 +71,7 @@ function useProvideAuth () {
     getUser,
     getToken,
     login,
-    logout
+    logout,
+    isViewAllowed
   }
 }

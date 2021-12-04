@@ -3,13 +3,21 @@ import React, { useState } from 'react'
 import Camera from './camera'
 import Autoplay, { AutoplayContext } from './autoplay'
 import { Columns, Heading, Section } from 'react-bulma-components'
+import { useAuth } from '../auth'
+import { Redirect } from 'react-router-dom'
 
-const View = ({ title, name, cameras, refreshIntervalMs, autoplay }) => {
+const View = (view) => {
+  const { title, name, cameras, refreshIntervalMs, autoplay } = view
   const [play, setPlay] = useState(autoplay)
+  const { isViewAllowed } = useAuth()
+
+  if (!isViewAllowed(view)) {
+    return <Redirect to='/login' />
+  }
 
   return (
     <Section>
-      <Heading>{title}</Heading>
+      <Heading renderAs='h2'>{title}</Heading>
       <Autoplay play={play} setPlay={setPlay} refreshIntervalMs={refreshIntervalMs} />
       <AutoplayContext.Provider value={{ play: play, refreshIntervalMs: refreshIntervalMs }}>
         <Columns>

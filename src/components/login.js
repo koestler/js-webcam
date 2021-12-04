@@ -22,7 +22,7 @@ const Login = () => {
 
   return (
     <Section>
-      <Heading>Log in</Heading>
+      <Heading renderAs='h2'>Log in</Heading>
       <Box style={{ maxWidth: 600, margin: 'auto' }}>
         {success && isLoggedIn() && <Notification color='success'>You have been logged in.</Notification>}
         {error && !isLoggedIn() && <Notification color='danger'>{error}</Notification>}
