@@ -3,17 +3,24 @@ import { Image, Message } from 'react-bulma-components'
 import { AutoplayContext } from './autoplay'
 import HideableMessage from './hideableMessage'
 import { useInView } from 'react-intersection-observer'
-import { useAuthFetchWrapper } from '../authFetch'
+import { useAuth } from '../auth'
 
-const fetchImage = (get, imgUrl, setImgSrc, play, refreshIntervalMs, setTimer) => {
+const fetchImage = (auth, imgUrl, setImgSrc, play, refreshIntervalMs, setTimer) => {
   const fetchStarted = Date.now()
-  get(imgUrl)
+
+  const requestOptions = { method: 'GET' }
+  const token = auth.getToken()
+  if (token) {
+    requestOptions.headers = { Authorization: token }
+  }
+
+  window.fetch(imgUrl, requestOptions)
     .then(response => {
       // restart fetch image when autoplay enabled
       if (play) {
         const fetchTime = Date.now() - fetchStarted
         const interval = Math.max(refreshIntervalMs - fetchTime, 0)
-        setTimer(setTimeout(() => fetchImage(get, imgUrl, setImgSrc, play, refreshIntervalMs, setTimer), interval))
+        setTimer(setTimeout(() => fetchImage(auth, imgUrl, setImgSrc, play, refreshIntervalMs, setTimer), interval))
       }
       return response.blob()
     })
@@ -33,18 +40,18 @@ const Camera = ({ viewName, cameraName, cameraTitle }) => {
   const [timer, setTimer] = useState(null)
   const { ref, inView } = useInView()
   const autoplay = play && inView
-  const { authGet } = useAuthFetchWrapper()
+  const auth = useAuth()
 
   useEffect(() => {
     if (initial || (autoplay && timer === null)) {
-      fetchImage(authGet, `/api/v0/images/${viewName}/${cameraName}.jpg`, setImgSrc, autoplay, refreshIntervalMs, setTimer)
+      fetchImage(auth, `/api/v0/images/${viewName}/${cameraName}.jpg`, setImgSrc, autoplay, refreshIntervalMs, setTimer)
       setInitial(false)
     }
     return () => {
       // cleanup on unmount
       clearTimeout(timer)
     }
-  }, [viewName, cameraName, initial, setInitial, setImgSrc, timer, setTimer, autoplay, refreshIntervalMs, authGet])
+  }, [viewName, cameraName, initial, setInitial, setImgSrc, timer, setTimer, autoplay, refreshIntervalMs, auth])
 
   useEffect(() => {
     // stop refresh timer
