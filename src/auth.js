@@ -50,10 +50,15 @@ function useProvideAuth () {
     return loginResponse.user
   }
 
+  const getToken = () => {
+    if (loginResponse === null) return null
+    return loginResponse.token
+  }
+
   return {
-    loginResponse,
     isLoggedIn,
     getUser,
+    getToken,
     login,
     logout
   }
