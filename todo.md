@@ -1,0 +1,2 @@
+- implement server side resize?
+- implement zoom?

@@ -1,4 +1,6 @@
 import React, { useState, useContext, createContext } from 'react'
+import axios from 'axios'
+import { imageGenerator } from './unauthApi'
 
 // store current token not only in react state but also in sessionStorage
 const authStorage = window.sessionStorage
@@ -49,6 +51,8 @@ function useProvideAuth () {
     return allowedViews.includes(view.name)
   }
 
+  const api = createApi(getToken(), logout)
+
   return {
     setLoginResponse,
     logout,
@@ -56,6 +60,29 @@ function useProvideAuth () {
     getUser,
     getToken,
     isViewAllowed,
-    isViewVisible
+    isViewVisible,
+    api
+  }
+}
+
+const createApi = (token, logout) => {
+  const api = axios.create({
+    baseURL: '/api/v0/'
+  })
+  if (token) {
+    // inject authorization header if logged in
+    api.defaults.headers.common.Authorization = token
+
+    // logout when 401 is returned
+    api.interceptors.response.use(r => r, error => {
+      if (error.response.status === 401) {
+        logout()
+      }
+      return Promise.reject(error)
+    })
+  }
+
+  return {
+    image: imageGenerator(api)
   }
 }

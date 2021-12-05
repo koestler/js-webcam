@@ -19,11 +19,11 @@ const View = (view) => {
     <Section>
       <Heading renderAs='h2'>{title}</Heading>
       <Autoplay play={play} setPlay={setPlay} refreshIntervalMs={refreshIntervalMs} />
-      <AutoplayContext.Provider value={{ play: play, refreshIntervalMs: refreshIntervalMs }}>
+      <AutoplayContext.Provider value={{ play: play, setPlay: setPlay, refreshIntervalMs: refreshIntervalMs }}>
         <Columns>
           {cameras.map(camera =>
             <Columns.Column key={camera.name}>
-              <Camera viewName={name} cameraName={camera.name} cameraTitle={camera.title} />
+              <Camera viewName={name} viewIsPublic={view.isPublic} cameraName={camera.name} cameraTitle={camera.title} />
             </Columns.Column>
           )}
         </Columns>

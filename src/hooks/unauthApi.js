@@ -2,6 +2,11 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { useAuth } from './auth'
 
+const api = axios.create({
+  baseURL: '/api/v0/',
+  headers: { Accept: 'application/json' }
+})
+
 export const useConfig = () => {
   const [success, setSuccess] = useState(false)
   const [error, setError] = useState(false)
@@ -10,7 +15,7 @@ export const useConfig = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('/api/v0/config')
+        const response = await api.get('config')
         setData(response.data)
         setSuccess(true)
       } catch (error) {
@@ -32,7 +37,7 @@ export const useLogin = () => {
     setSuccess(false)
     setError(false)
     try {
-      const response = await axios.post('/api/v0/login', { user, password })
+      const response = await api.post('login', { user, password })
       setLoginResponse(response.data)
       setSuccess(true)
     } catch (error) {
@@ -42,3 +47,22 @@ export const useLogin = () => {
 
   return { login, success, error }
 }
+
+export const imageGenerator = api => async (viewName, cameraName) => {
+  try {
+    const response = await api.get(
+      `images/${viewName}/${cameraName}.jpg`,
+      { responseType: 'blob' }
+    )
+    const p = new Promise(resolve => {
+      const reader = new window.FileReader()
+      reader.onload = function () { resolve(this.result) }
+      reader.readAsDataURL(response.data)
+    })
+    return await p
+  } catch (error) {
+    return Promise.reject(error)
+  }
+}
+
+export const image = imageGenerator(api)
