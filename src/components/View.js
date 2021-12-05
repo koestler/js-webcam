@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 
-import Camera from './camera'
-import Autoplay, { AutoplayContext } from './autoplay'
+import Camera from './Camera'
+import Autoplay, { AutoplayContext } from './Autoplay'
 import { Columns, Heading, Section } from 'react-bulma-components'
-import { useAuth } from '../auth'
+import { useAuth } from '../hooks/auth'
 import { Redirect } from 'react-router-dom'
 
 const View = (view) => {

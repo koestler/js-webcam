@@ -1,9 +1,9 @@
 import React, { useContext, useState, useEffect } from 'react'
 import { Image, Message } from 'react-bulma-components'
-import { AutoplayContext } from './autoplay'
-import HideableMessage from './hideableMessage'
+import { AutoplayContext } from './Autoplay'
+import HideableMessage from './HideableMessage'
 import { useInView } from 'react-intersection-observer'
-import { useAuth } from '../auth'
+import { useAuth } from '../hooks/auth'
 
 const fetchImage = (auth, imgUrl, setImgSrc, play, refreshIntervalMs, setTimer) => {
   const fetchStarted = Date.now()

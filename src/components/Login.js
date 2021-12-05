@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Button, Box, Form, Section, Heading, Notification } from 'react-bulma-components'
 import { useForm } from 'react-hook-form'
-import { useAuth } from '../auth'
+import { useAuth } from '../hooks/auth'
 
 const Login = () => {
   const { register, handleSubmit, formState: { errors }, reset } = useForm()

@@ -1,11 +1,11 @@
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
-import Header from './components/header'
-import View from './components/view'
-import Login from './components/login'
-import Footer from './components/footer'
+import Header from './Header'
+import View from './View'
+import Login from './Login'
+import Footer from './Footer'
 import { Heading, Notification, Section } from 'react-bulma-components'
-import { useAuth } from './auth'
+import { useAuth } from '../hooks/auth'
 
 const ConfiguredApp = ({ projectTitle, views }) => {
   const { isViewVisible } = useAuth()

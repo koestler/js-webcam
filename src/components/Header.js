@@ -3,8 +3,8 @@ import { Heading, Button, Navbar } from 'react-bulma-components'
 import { Link, NavLink } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLock, faLockOpen } from '@fortawesome/free-solid-svg-icons'
-import { useAuth } from '../auth'
-import './header.scss'
+import { useAuth } from '../hooks/auth'
+import './Header.scss'
 
 const Header = ({ views, title }) => {
   const [burgerActive, setBurgerActive] = useState(false)

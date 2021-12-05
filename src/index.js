@@ -1,9 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import './index.scss'
-import App from './App'
+import App from './components/App'
 import { HelmetProvider } from 'react-helmet-async'
-import { AuthProvider } from './auth'
+import { AuthProvider } from './hooks/auth'
 
 ReactDOM.render(
   <React.StrictMode>
