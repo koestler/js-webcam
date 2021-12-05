@@ -26,29 +26,6 @@ function useProvideAuth () {
     storeLoginResponse(loginResponse)
   }
 
-  const login = async (user, password) => {
-    try {
-      const response = await window.fetch('/api/v0/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ user, password })
-      })
-
-      const body = await response.json()
-
-      if (response.ok) {
-        setLoginResponse(body)
-        return null
-      } else {
-        return 'login failed: ' + body.message
-      }
-    } catch (err) {
-      return 'cannot login: ' + err
-    }
-  }
-
   const logout = () => setLoginResponse(null)
 
   const isLoggedIn = () => loginResponse !== null
@@ -73,11 +50,11 @@ function useProvideAuth () {
   }
 
   return {
+    setLoginResponse,
+    logout,
     isLoggedIn,
     getUser,
     getToken,
-    login,
-    logout,
     isViewAllowed,
     isViewVisible
   }

@@ -1,26 +1,22 @@
-import React, { useState } from 'react'
+import React, { useEffect } from 'react'
 import { Button, Box, Form, Section, Heading, Notification } from 'react-bulma-components'
 import { useForm } from 'react-hook-form'
 import { useAuth } from '../hooks/auth'
+import { useLogin } from '../hooks/unauthApi'
 
 const Login = () => {
   const { register, handleSubmit, formState: { errors }, reset } = useForm()
-  const [success, setSuccess] = useState(false)
-  const [error, setError] = useState(false)
-  const { login, logout, isLoggedIn, getUser } = useAuth()
+  const { logout, isLoggedIn, getUser } = useAuth()
+  const { login, success, error } = useLogin()
 
   const onSubmit = async data => {
-    setSuccess(false)
-    setError(false)
     logout()
-    const error = await login(data.user, data.password)
-    if (error === null) {
-      setSuccess(true)
-      reset()
-    } else {
-      setError(error)
-    }
+    login(data.user, data.password)
   }
+
+  useEffect(() => {
+    if (success) reset()
+  }, [success, reset])
 
   return (
     <Section>
@@ -28,7 +24,7 @@ const Login = () => {
       <Box style={{ maxWidth: 600, margin: 'auto' }}>
         {success && isLoggedIn() && <Notification color='success'>You have been logged in as {getUser()}.</Notification>}
         {!success && isLoggedIn() && <Notification color='info'>You are logged in as {getUser()}.</Notification>}
-        {error && !isLoggedIn() && <Notification color='danger'>{error}</Notification>}
+        {error && !isLoggedIn() && <Notification color='danger'>Login failed: {error}</Notification>}
 
         <form onSubmit={handleSubmit(onSubmit)}>
           <Form.Field>

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button, Container, Notification, Section } from 'react-bulma-components'
 import ConfiguredApp from './ConfiguredApp'
-import { useConfig } from '../hooks/api'
+import { useConfig } from '../hooks/unauthApi'
 
 const App = () => {
   const { config, success, error } = useConfig()
