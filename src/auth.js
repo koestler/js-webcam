@@ -66,12 +66,19 @@ function useProvideAuth () {
     return view.isPublic || allowedViews.includes(view.name)
   }
 
+  const isViewVisible = view => {
+    if (!view.hidden) return true
+    const allowedViews = loginResponse?.allowedViews || []
+    return allowedViews.includes(view.name)
+  }
+
   return {
     isLoggedIn,
     getUser,
     getToken,
     login,
     logout,
-    isViewAllowed
+    isViewAllowed,
+    isViewVisible
   }
 }

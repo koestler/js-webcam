@@ -5,16 +5,19 @@ import View from './components/view'
 import Login from './components/login'
 import Footer from './components/footer'
 import { Heading, Notification, Section } from 'react-bulma-components'
+import { useAuth } from './auth'
 
 const ConfiguredApp = ({ projectTitle, views }) => {
+  const { isViewVisible } = useAuth()
+  const myViews = views.filter(isViewVisible)
   return (
     <BrowserRouter>
       <Helmet>
         <title>{projectTitle}</title>
       </Helmet>
-      <Header title={projectTitle} views={views} />
+      <Header title={projectTitle} views={myViews} />
       <Switch>
-        {views.map(view =>
+        {myViews.map(view =>
           <Route key={view.name} path={`/${view.name}`}>
             <View {...view} />
           </Route>
@@ -22,7 +25,7 @@ const ConfiguredApp = ({ projectTitle, views }) => {
         <Route path='/login'>
           <Login />
         </Route>
-        <DefaultRoute default views={views} />
+        <DefaultRoute default views={myViews} />
       </Switch>
       <Footer />
     </BrowserRouter>
