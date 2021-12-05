@@ -7,7 +7,7 @@ const Login = () => {
   const { register, handleSubmit, formState: { errors } } = useForm()
   const [success, setSuccess] = useState(false)
   const [error, setError] = useState(false)
-  const { login, isLoggedIn } = useAuth()
+  const { login, isLoggedIn, getUser } = useAuth()
 
   const onSubmit = async data => {
     setSuccess(false)
@@ -25,6 +25,7 @@ const Login = () => {
       <Heading renderAs='h2'>Log in</Heading>
       <Box style={{ maxWidth: 600, margin: 'auto' }}>
         {success && isLoggedIn() && <Notification color='success'>You have been logged in.</Notification>}
+        {!success && isLoggedIn() && <Notification color='info'>You are logged in as {getUser()}.</Notification>}
         {error && !isLoggedIn() && <Notification color='danger'>{error}</Notification>}
 
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -39,7 +40,7 @@ const Login = () => {
           <Form.Field>
             <Form.Label>Password</Form.Label>
             <input
-              type='password' placeholder='*********'
+              type='password'
               className={'input is-primary' + (errors.password ? ' is-danger' : '')}
               {...register('password', { required: true, minLength: 4 })}
             />
