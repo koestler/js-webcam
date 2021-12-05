@@ -4,17 +4,19 @@ import { useForm } from 'react-hook-form'
 import { useAuth } from '../auth'
 
 const Login = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm()
+  const { register, handleSubmit, formState: { errors }, reset } = useForm()
   const [success, setSuccess] = useState(false)
   const [error, setError] = useState(false)
-  const { login, isLoggedIn, getUser } = useAuth()
+  const { login, logout, isLoggedIn, getUser } = useAuth()
 
   const onSubmit = async data => {
     setSuccess(false)
     setError(false)
+    logout()
     const error = await login(data.user, data.password)
     if (error === null) {
       setSuccess(true)
+      reset()
     } else {
       setError(error)
     }
@@ -24,7 +26,7 @@ const Login = () => {
     <Section>
       <Heading renderAs='h2'>Log in</Heading>
       <Box style={{ maxWidth: 600, margin: 'auto' }}>
-        {success && isLoggedIn() && <Notification color='success'>You have been logged in.</Notification>}
+        {success && isLoggedIn() && <Notification color='success'>You have been logged in as {getUser()}.</Notification>}
         {!success && isLoggedIn() && <Notification color='info'>You are logged in as {getUser()}.</Notification>}
         {error && !isLoggedIn() && <Notification color='danger'>{error}</Notification>}
 
