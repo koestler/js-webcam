@@ -1,5 +1,5 @@
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom'
-import { Helmet } from 'react-helmet'
+import { Helmet } from 'react-helmet-async'
 import Header from './components/header'
 import View from './components/view'
 import Login from './components/login'
