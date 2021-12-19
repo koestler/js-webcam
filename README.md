@@ -1,3 +1,10 @@
+## Creating a production build
+This build does contain a scratch container with only the static build in /frontend-build. It is meant to be used in the go-webcam production build.
+```
+docker build -f docker/Dockerfile -t koestler/js-webcam .
+docker push koestler/js-webcam
+```
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
