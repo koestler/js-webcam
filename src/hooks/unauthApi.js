@@ -56,10 +56,15 @@ export const imageGenerator = api => async (viewName, cameraName) => {
     )
     const p = new Promise(resolve => {
       const reader = new window.FileReader()
-      reader.onload = function () { resolve(this.result) }
+      reader.onload = function () {
+        resolve({
+          blob: this.result,
+          nextImageAt: response.headers['x-next-image-at'] || null
+        })
+      }
       reader.readAsDataURL(response.data)
     })
-    return await p
+    return p
   } catch (error) {
     return Promise.reject(error)
   }
