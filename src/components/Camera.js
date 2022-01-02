@@ -1,12 +1,12 @@
 import React, { useContext, useState, useEffect } from 'react'
-import { Image, Message } from 'react-bulma-components'
+import { Image, Message, Button, Notification } from 'react-bulma-components'
 import { AutoplayContext } from './Autoplay'
 import HideableMessage from './HideableMessage'
 import { useInView } from 'react-intersection-observer'
 import { useAuth } from '../hooks/auth'
 import { image } from '../hooks/unauthApi'
 
-const fetchImage = (fetch, viewName, cameraName, setImgSrc, play, refreshIntervalMs, setTimer, onError) => {
+const fetchImage = (fetch, viewName, cameraName, play, refreshIntervalMs, setTimer, onSuccess, onError) => {
   const fetchStarted = new Date()
   console.log(`view=${viewName}, camera=${cameraName} : fetchStarted=` + fetchStarted.toISOString())
   fetch(viewName, cameraName).then(({ blob, nextImageAt }) => {
@@ -16,7 +16,7 @@ const fetchImage = (fetch, viewName, cameraName, setImgSrc, play, refreshInterva
       let interval = refreshIntervalMs
 
       // fetch next time at last time fetch was started + refresh interval
-      interval = Math.max(0, Math.min(refreshIntervalMs, fetchStarted.getTime() + refreshIntervalMs - Date.now() ))
+      interval = Math.max(0, Math.min(refreshIntervalMs, fetchStarted.getTime() + refreshIntervalMs - Date.now()))
 
       // when next-image-at header is received and refreshInterval > 2s; use that time
       if (nextImageAt !== null && refreshIntervalMs > 2000) {
@@ -27,16 +27,18 @@ const fetchImage = (fetch, viewName, cameraName, setImgSrc, play, refreshInterva
       console.log(`view=${viewName}, camera=${cameraName} : interval=` + interval)
 
       setTimer(setTimeout(() => {
-        fetchImage(fetch, viewName, cameraName, setImgSrc, play, refreshIntervalMs, setTimer, onError)
+        fetchImage(fetch, viewName, cameraName, play, refreshIntervalMs, setTimer, onSuccess, onError)
       }, interval))
     }
-    setImgSrc(blob)
+    onSuccess(blob)
   }).catch(onError)
 }
 
 const Camera = ({ viewName, viewIsPublic, cameraName, cameraTitle }) => {
   const { play, setPlay, refreshIntervalMs } = useContext(AutoplayContext)
   const [initial, setInitial] = useState(true)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(null)
   const [imgSrc, setImgSrc] = useState(null)
   const [timer, setTimer] = useState(null)
   const { ref, inView } = useInView()
@@ -48,9 +50,17 @@ const Camera = ({ viewName, viewIsPublic, cameraName, cameraTitle }) => {
 
   useEffect(() => {
     if (initial || (autoplay && timer === null)) {
-      fetchImage(fetch, viewName, cameraName, setImgSrc, autoplay, refreshIntervalMs, setTimer, error => {
-        console.log('cannot fetch image: ', error)
+      setError(null)
+      setLoading(true)
+      fetchImage(fetch, viewName, cameraName, autoplay, refreshIntervalMs, setTimer, blob => {
+        setLoading(false)
+        setImgSrc(blob)
+      },
+      error => {
+        setError(error)
+        setLoading(false)
         setPlay(false)
+        setImgSrc(null)
       })
       setInitial(false)
     }
@@ -73,7 +83,9 @@ const Camera = ({ viewName, viewIsPublic, cameraName, cameraTitle }) => {
   return (
     <HideableMessage header={<p>{cameraTitle}</p>}>
       <Message.Body>
-        <div ref={ref}>
+        {loading && <Button size='large' loading />}
+        {error && <Notification color='danger'>Cannot load camera image</Notification>}
+        <div ref={ref}> {/* div is used to check if the image is / would be inside the view */}
           {imgSrc && <Image src={imgSrc} />}
         </div>
       </Message.Body>
