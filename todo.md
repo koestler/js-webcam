@@ -1,2 +1,3 @@
 - implement server side resize?
 - implement zoom?
+- cancel camera fetch on unmount
