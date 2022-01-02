@@ -6,6 +6,7 @@ import Login from './Login'
 import Footer from './Footer'
 import { Heading, Notification, Section } from 'react-bulma-components'
 import { useAuth } from '../hooks/auth'
+import { Trans } from '@lingui/macro'
 
 const ConfiguredApp = ({ projectTitle, views }) => {
   const { isViewVisible } = useAuth()
@@ -38,7 +39,7 @@ const DefaultRoute = ({ views }) => {
       <Section>
         <Heading>Empty</Heading>
         <Notification>
-          No views are defined. Check your config.yaml
+          <Trans>No views are defined. Check your config.yaml</Trans>
         </Notification>
       </Section>
     )

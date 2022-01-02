@@ -4,6 +4,7 @@ import { Link, NavLink } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLock, faLockOpen } from '@fortawesome/free-solid-svg-icons'
 import { useAuth } from '../hooks/auth'
+import { Trans } from '@lingui/macro'
 import './Header.scss'
 
 const Header = ({ views, title }) => {
@@ -23,12 +24,12 @@ const Header = ({ views, title }) => {
         <Navbar.Container align='end'>
           {isLoggedIn() || (
             <Navbar.Item renderAs={Link} to='/login'>
-              <Button>Log in</Button>
+              <Button><Trans>Log in</Trans></Button>
             </Navbar.Item>
           )}
           {isLoggedIn() && (
             <Navbar.Item>
-              <Button onClick={logout}>Log out {getUser()}</Button>
+              <Button onClick={logout}><Trans>Log out {getUser()}</Trans></Button>
             </Navbar.Item>
           )}
         </Navbar.Container>

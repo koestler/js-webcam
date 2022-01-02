@@ -3,6 +3,7 @@ import { Button, Box, Form, Section, Heading, Notification } from 'react-bulma-c
 import { useForm } from 'react-hook-form'
 import { useAuth } from '../hooks/auth'
 import { useLogin } from '../hooks/unauthApi'
+import { Trans } from '@lingui/macro'
 
 const Login = () => {
   const { register, handleSubmit, formState: { errors }, reset } = useForm()
@@ -22,13 +23,13 @@ const Login = () => {
     <Section>
       <Heading renderAs='h2'>Log in</Heading>
       <Box style={{ maxWidth: 600, margin: 'auto' }}>
-        {success && isLoggedIn() && <Notification color='success'>You have been logged in as {getUser()}.</Notification>}
-        {!success && isLoggedIn() && <Notification color='info'>You are logged in as {getUser()}.</Notification>}
-        {error && !isLoggedIn() && <Notification color='danger'>Login failed: {error}</Notification>}
+        {success && isLoggedIn() && <Notification color='success'><Trans>You have been logged in as {getUser()}.</Trans></Notification>}
+        {!success && isLoggedIn() && <Notification color='info'><Trans>You are logged in as {getUser()}.</Trans></Notification>}
+        {error && !isLoggedIn() && <Notification color='danger'><Trans>Login failed: {error}</Trans></Notification>}
 
         <form onSubmit={handleSubmit(onSubmit)}>
           <Form.Field>
-            <Form.Label>User</Form.Label>
+            <Form.Label><Trans>User</Trans></Form.Label>
             <input
               type='text'
               className={'input is-primary' + (errors.user ? ' is-danger' : '')}
@@ -36,7 +37,7 @@ const Login = () => {
             />
           </Form.Field>
           <Form.Field>
-            <Form.Label>Password</Form.Label>
+            <Form.Label><Trans>Password</Trans></Form.Label>
             <input
               type='password'
               className={'input is-primary' + (errors.password ? ' is-danger' : '')}
@@ -44,7 +45,7 @@ const Login = () => {
             />
           </Form.Field>
           <Button.Group align='right'>
-            <Button color='primary'>Log in</Button>
+            <Button color='primary'><Trans>Log in</Trans></Button>
           </Button.Group>
         </form>
       </Box>

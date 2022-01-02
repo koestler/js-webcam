@@ -2,6 +2,7 @@ import React from 'react'
 import { Button, Container, Notification, Section } from 'react-bulma-components'
 import ConfiguredApp from './ConfiguredApp'
 import { useConfig } from '../hooks/unauthApi'
+import { Trans } from '@lingui/macro'
 
 const App = () => {
   const { config, success, error } = useConfig()
@@ -17,7 +18,7 @@ const App = () => {
 const Error = ({ error }) => {
   return (
     <Section>
-      <Notification color='danger'>Cannot load configuration: {error}</Notification>
+      <Notification color='danger'><Trans>Cannot load configuration: {error}</Trans></Notification>
     </Section>
   )
 }
@@ -25,7 +26,7 @@ const Error = ({ error }) => {
 const Loading = () => {
   return (
     <Section>
-      <Notification color='info'>Loading initial configuration</Notification>
+      <Notification color='info'><Trans>Loading initial configuration</Trans></Notification>
       <Container>
         <Button size='large' loading />
       </Container>
