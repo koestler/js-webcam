@@ -5,9 +5,10 @@ ENV GENERATE_SOURCEMAP=false
 WORKDIR /app
 COPY . /app
 RUN npm install
-RUN npm run build
+
+RUN export REACT_APP_VERSION=`git describe --always --tags`; \
+  npm run build
 
 # build final image
-FROM scratch
-USER app
-COPY --from=js-builder /app/build /frontend-build
+FROM nginx:stable-alpine
+COPY --from=js-builder /app/build /usr/share/nginx/html

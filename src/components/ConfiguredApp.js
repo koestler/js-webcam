@@ -8,7 +8,7 @@ import { Heading, Notification, Section } from 'react-bulma-components'
 import { useAuth } from '../hooks/auth'
 import { Trans } from '@lingui/macro'
 
-const ConfiguredApp = ({ projectTitle, views }) => {
+const ConfiguredApp = ({ projectTitle, backendVersion, views }) => {
   const { isViewVisible } = useAuth()
   const myViews = views.filter(isViewVisible)
   return (
@@ -28,7 +28,7 @@ const ConfiguredApp = ({ projectTitle, views }) => {
         </Route>
         <DefaultRoute default views={myViews} />
       </Switch>
-      <Footer />
+      <Footer backendVersion={backendVersion} />
     </BrowserRouter>
   )
 }
