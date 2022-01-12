@@ -9,7 +9,6 @@ import { Trans } from '@lingui/macro'
 
 const fetchImage = (fetch, viewName, cameraName, play, refreshIntervalMs, setTimer, onSuccess, onError) => {
   const fetchStarted = new Date()
-  console.log(`view=${viewName}, camera=${cameraName} : fetchStarted=` + fetchStarted.toISOString())
   fetch(viewName, cameraName).then(({ blob, nextImageAt }) => {
     // restart fetch image when autoplay enabled
     if (play) {
@@ -25,7 +24,6 @@ const fetchImage = (fetch, viewName, cameraName, play, refreshIntervalMs, setTim
         interval = nextFetch.getTime() - Date.now()
         interval = Math.max(refreshIntervalMs / 2, Math.min(refreshIntervalMs, interval))
       }
-      console.log(`view=${viewName}, camera=${cameraName} : interval=` + interval)
 
       setTimer(setTimeout(() => {
         fetchImage(fetch, viewName, cameraName, play, refreshIntervalMs, setTimer, onSuccess, onError)
