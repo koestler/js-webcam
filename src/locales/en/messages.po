@@ -13,15 +13,15 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/components/Camera.js:88
+#: src/components/Camera.js:86
 msgid "Cannot load camera image."
 msgstr "Cannot load camera image."
 
-#: src/components/App.js:21
+#: src/components/App.js:23
 msgid "Cannot load configuration: {error}"
 msgstr "Cannot load configuration: {error}"
 
-#: src/components/App.js:29
+#: src/components/App.js:34
 msgid "Loading initial configuration"
 msgstr "Loading initial configuration"
 
@@ -35,8 +35,12 @@ msgid "Log out {0}"
 msgstr "Log out {0}"
 
 #: src/components/Login.js:28
-msgid "Login failed: {error}"
-msgstr "Login failed: {error}"
+msgid "Login failed"
+msgstr "Login failed"
+
+#: src/components/Login.js:28
+#~ msgid "Login failed: {error}"
+#~ msgstr "Login failed: {error}"
 
 #: src/components/ConfiguredApp.js:42
 msgid "No views are defined. Check your config.yaml"

@@ -25,7 +25,7 @@ const Login = () => {
       <Box style={{ maxWidth: 600, margin: 'auto' }}>
         {success && isLoggedIn() && <Notification color='success'><Trans>You have been logged in as {getUser()}.</Trans></Notification>}
         {!success && isLoggedIn() && <Notification color='info'><Trans>You are logged in as {getUser()}.</Trans></Notification>}
-        {error && !isLoggedIn() && <Notification color='danger'><Trans>Login failed: {error}</Trans></Notification>}
+        {error && !isLoggedIn() && <Notification color='danger'><Trans>Login failed</Trans></Notification>}
 
         <form onSubmit={handleSubmit(onSubmit)}>
           <Form.Field>
