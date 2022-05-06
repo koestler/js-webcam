@@ -6,6 +6,8 @@ import { useInView } from 'react-intersection-observer'
 import { useAuth } from '../hooks/auth'
 import { image } from '../hooks/unauthApi'
 import { Trans } from '@lingui/macro'
+import Zoom from 'react-medium-image-zoom'
+import 'react-medium-image-zoom/dist/styles.css'
 
 const fetchImage = (fetch, viewName, cameraName, play, refreshIntervalMs, setTimer, onSuccess, onError) => {
   const fetchStarted = new Date()
@@ -85,7 +87,7 @@ const Camera = ({ viewName, viewIsPublic, cameraName, cameraTitle }) => {
         {loading && <Button size='large' loading />}
         {error && <Notification color='danger'><Trans>Cannot load camera image.</Trans></Notification>}
         <div ref={ref}> {/* div is used to check if the image is / would be inside the view */}
-          {imgSrc && <Image src={imgSrc} />}
+          {imgSrc && <Zoom><Image src={imgSrc} /></Zoom>}
         </div>
       </Message.Body>
     </HideableMessage>

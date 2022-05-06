@@ -56,7 +56,7 @@ bulmaToast.setDefaults({
   duration: 2000,
   position: 'top-center',
   opacity: 0.8,
-  closeOnClick: true,
+  closeOnClick: true
 })
 
 export default ConfiguredApp
