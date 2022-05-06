@@ -26,7 +26,7 @@ msgid "Loading initial configuration"
 msgstr "Loading initial configuration"
 
 #: src/components/Header.js:27
-#: src/components/Login.js:48
+#: src/components/Login.js:45
 msgid "Log in"
 msgstr "Log in"
 
@@ -34,30 +34,26 @@ msgstr "Log in"
 msgid "Log out {0}"
 msgstr "Log out {0}"
 
-#: src/components/Login.js:28
+#: src/components/Login.js:14
 msgid "Login failed"
 msgstr "Login failed"
 
-#: src/components/Login.js:28
-#~ msgid "Login failed: {error}"
-#~ msgstr "Login failed: {error}"
-
-#: src/components/ConfiguredApp.js:42
+#: src/components/ConfiguredApp.js:57
 msgid "No views are defined. Check your config.yaml"
 msgstr "No views are defined. Check your config.yaml"
 
-#: src/components/Login.js:40
+#: src/components/Login.js:37
 msgid "Password"
 msgstr "Password"
 
-#: src/components/Login.js:32
+#: src/components/Login.js:29
 msgid "User"
 msgstr "User"
 
-#: src/components/Login.js:27
+#: src/components/Login.js:25
 msgid "You are logged in as {0}."
 msgstr "You are logged in as {0}."
 
-#: src/components/Login.js:26
-msgid "You have been logged in as {0}."
-msgstr "You have been logged in as {0}."
+#: src/components/Login.js:13
+msgid "You have been logged in as {user}."
+msgstr "You have been logged in as {user}."
