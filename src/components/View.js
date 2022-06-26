@@ -10,8 +10,14 @@ const View = (view) => {
 
   return (
     <Section>
-      <Heading renderAs='h2'>{title}</Heading>
-      <Autoplay play={play} setPlay={setPlay} refreshIntervalMs={refreshIntervalMs} />
+      <Columns>
+        <Columns.Column>
+          <Heading renderAs='h2'>{title}</Heading>
+        </Columns.Column>
+        <Columns.Column size={2}>
+          <Autoplay play={play} setPlay={setPlay} refreshIntervalMs={refreshIntervalMs} />
+        </Columns.Column>
+      </Columns>
       <AutoplayContext.Provider value={{ play: play, setPlay: setPlay, refreshIntervalMs: refreshIntervalMs }}>
         <Columns>
           {cameras.map(camera =>
