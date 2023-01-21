@@ -18,7 +18,7 @@ const View = (view) => {
           <Autoplay play={play} setPlay={setPlay} refreshIntervalMs={refreshIntervalMs} />
         </Columns.Column>
       </Columns>
-      <AutoplayContext.Provider value={{ play: play, setPlay: setPlay, refreshIntervalMs: refreshIntervalMs }}>
+      <AutoplayContext.Provider value={{ play, setPlay, refreshIntervalMs }}>
         <Columns>
           {cameras.map(camera =>
             <Columns.Column key={camera.name}>
