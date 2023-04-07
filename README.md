@@ -7,8 +7,8 @@ See it's [README](https://github.com/koestler/go-webcam#readme) for more details
 ## Creating a production build
 This build does contain a scratch container with only the static build in /frontend-build. It is meant to be used in the go-webcam production build.
 ```
-docker build -f docker/Dockerfile -t koestler/js-webcam .
-docker push koestler/js-webcam
+docker build -f docker/Dockerfile -t ghcr.io/koestler/js-webcam .
+docker push ghcr.io/koestler/js-webcam
 ```
 
 ## Available Scripts
