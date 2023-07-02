@@ -13,7 +13,7 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: src/components/Camera.js:86
+#: src/components/Camera.js:88
 msgid "Cannot load camera image."
 msgstr "Bild von Kamera kann nicht geladen werden."
 
@@ -26,7 +26,7 @@ msgid "Loading initial configuration"
 msgstr "Lade Konfiguration"
 
 #: src/components/Header.js:27
-#: src/components/Login.js:45
+#: src/components/Login.js:46
 msgid "Log in"
 msgstr "Anmelden"
 
@@ -34,26 +34,22 @@ msgstr "Anmelden"
 msgid "Log out {0}"
 msgstr "Abmelden {0}"
 
-#: src/components/Login.js:14
+#: src/components/Login.js:15
 msgid "Login failed"
 msgstr "Anmeldung fehlgeschlagen"
 
-#: src/components/ConfiguredApp.js:57
+#: src/components/ConfiguredApp.js:45
 msgid "No views are defined. Check your config.yaml"
 msgstr "Keine \"Views\" definiert. Siehe config.yaml"
 
-#: src/components/Login.js:37
+#: src/components/Login.js:38
 msgid "Password"
 msgstr "Passwort"
 
-#: src/components/Login.js:29
+#: src/components/Login.js:30
 msgid "User"
 msgstr "Benutzername"
 
-#: src/components/Login.js:25
-msgid "You are logged in as {0}."
-msgstr "Du bist eingeloggt als {0}."
-
-#: src/components/Login.js:13
+#: src/components/Login.js:14
 msgid "You have been logged in as {user}."
 msgstr "Du wurdest eingeloggt als {user}."
